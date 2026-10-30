@@ -16,8 +16,11 @@ Old 2009–2011 wallets used UNCOMPRESSED keys, so by default we verify against 
 compressed and uncompressed P2PKH address. Speed: `pip install coincurve` auto-accelerates.
 """
 import sys, os, argparse, itertools, time, hashlib
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from btc import N, priv_to_address
+try:
+    from .btc import N, priv_to_address
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from btc import N, priv_to_address
 
 HEX = "0123456789abcdef"
 

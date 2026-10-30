@@ -17,23 +17,26 @@ it to the owner, never sweep.** Possessing a stranger's key is the crime, publis
 
 ## Install
 ```bash
-pip install ecdsa base58          # core
-pip install coincurve             # optional: ~100x faster search
+pip install walletrecover             # core (ecdsa, base58)
+pip install "walletrecover[fast]"     # + coincurve, ~100x faster search
+pip install "walletrecover[bip39]"    # + bip-utils, for seed-phrase cases
 ```
 
 ## Use — owner-run CLI
+After `pip install`, the `walletrecover` command is available (from a clone instead, use
+`python -m walletrecover.recover ...`):
 ```bash
 # free feasibility check first — honest ETA + verdict, no secret needed
-python recover.py estimate 16777216
+walletrecover estimate 16777216
 
 # a hex private key with a few forgotten characters (mark them with ?)
-python recover.py hexkey cdb98e...b353f9?? 1YourOwnAddress...
+walletrecover hexkey cdb98e...b353f9?? 1YourOwnAddress...
 
 # a passphrase/brainwallet you remember the stem of (+ a forgotten tail)
-python recover.py passphrase "myWallet2019_" 1YourOwnAddress... --charset 0123456789 --length 3
+walletrecover passphrase "myWallet2019_" 1YourOwnAddress... --charset 0123456789 --length 3
 
 # built-in self-test on a wallet generated locally (proves it works)
-python recover.py selftest
+walletrecover selftest
 ```
 - Verifies against **both compressed and uncompressed** P2PKH addresses — old 2009–2011 Bitcoin Core
   wallets used uncompressed keys.

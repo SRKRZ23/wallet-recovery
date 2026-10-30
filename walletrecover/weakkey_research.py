@@ -6,8 +6,11 @@ White-hat use only: understand the failure, then (if ever found in the wild) rep
 the owner — never sweep it. The curve/hash are not broken; broken *randomness* is.
 """
 import sys, os, hashlib, secrets
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from btc import N, G, priv_to_address
+try:
+    from .btc import N, G, priv_to_address
+except ImportError:
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    from btc import N, G, priv_to_address
 from ecdsa.numbertheory import inverse_mod
 
 line = lambda: print("-" * 72)
